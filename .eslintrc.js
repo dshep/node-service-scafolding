@@ -1,6 +1,6 @@
 module.exports = {
-    // parser: 'babel-eslint',
-    parser: '@babel/eslint-parser',
+    // parser: 'babel-',
+    parser: '@babel/-parser',
     env: {
         browser: true,
         commonjs: true,
@@ -8,7 +8,7 @@ module.exports = {
         node: true,
         jest: true,
     },
-    extends: ['eslint:recommended', 'plugin:react/recommended'],
+    extends: [':recommended', 'plugin:react/recommended'],
     parserOptions: {
         ecmaFeatures: {
             experimentalObjectRestSpread: true,
