@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Service Data API
+  version: 1.0.0
+paths:
+  /service_data:
+    get:
+      summary: Get Service Data
+      description: Retrieves all service data records
+      responses:
+        '200':
+          description: Successfully retrieved service data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceData'
+        '500':
+          description: Internal server error
+
+    post:
+      summary: Create Service Data
+      description: Creates a new service data record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceDataInput'
+      responses:
+        '201':
+          description: Successfully created service data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceData'
+        '400':
+          description: Invalid request payload
+        '500':
+          description: Internal server error
+
+  /service_data/{id}:
+    get:
+      summary: Get Service Data by ID
+      description: Retrieves a specific service data record by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved service data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceData'
+        '404':
+          description: Service data not found
+        '500':
+          description: Internal server error
+
+    put:
+      summary: Update Service Data
+      description: Updates an existing service data record
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceDataInput'
+      responses:
+        '200':
+          description: Successfully updated service data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceData'
+        '400':
+          description: Invalid request payload
+        '404':
+          description: Service data not found
+        '500':
+          description: Internal server error
+
+    delete:
+      summary: Delete Service Data
+      description: Deletes a specific service data record
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfully deleted service data
+        '404':
+          description: Service data not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    ServiceData:
+      type: object
+      properties:
+        id:
+          type: string
+        serviceName:
+          type: string
+        state:
+          $ref: '#/components/schemas/USState'
+        formName: string
+        serviceURL:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        updateDate:
+          type: string
+          format: date-time
+
+    ServiceDataInput:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        state:
+          $ref: '#/components/schemas/USState'
+        formName: string
+        serviceURL:
+          type: string
+      required:
+        - serviceName
+        - state
+        - formName
+
+    USState:
+      type: string
+      enum:
+        - AL
+        - AK
+        - AZ
+        # ... (other
